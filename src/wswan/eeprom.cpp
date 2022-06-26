@@ -183,9 +183,12 @@ void WSwan_EEPROMInit(const char *Name, const uint16 BYear, const uint8 BMonth, 
   {
    char tc = MDFN_azupper(Name[x]);
    if(tc == ' ') zechar = 0;
+   else if(tc == '+') zechar = 0x27;
+   else if(tc == '-') zechar = 0x28;
+   else if(tc == '?') zechar = 0x29;
+   else if(tc == '.') zechar = 0x2A;
    else if(tc >= '0' && tc <= '9') zechar = tc - '0' + 0x1;
    else if(tc >= 'A' && tc <= 'Z') zechar = tc - 'A' + 0xB;
-   else if(tc >= 'a' && tc <= 'z') zechar = tc - 'a' + 0xB + 26;
   }
   iEEPROM[0x60 + x] = zechar;
  }
