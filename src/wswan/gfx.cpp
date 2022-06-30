@@ -501,7 +501,7 @@ uint8 WSwan_GfxRead(uint32 A)
 
 bool wsExecuteLine(MDFN_Surface *surface, bool skip)
 {
-	static const void* const WEP_Tab[4] = { &&WEP0, &&WEP1, &&WEP2, &&WEP3 };	// The things we do for debugger step mode save states!  If we ever add more entries, remember to change the mask stuff in StateAction
+	static const void* const WEP_Tab[3] = { &&WEP0, &&WEP1, &&WEP2 };	// The things we do for debugger step mode save states!  If we ever add more entries, remember to change the mask stuff in StateAction
         bool ret;
 
 	weppy = 0;
@@ -571,7 +571,7 @@ bool wsExecuteLine(MDFN_Surface *surface, bool skip)
 
 	//
 	weppy = 2;
-        v30mz_execute(96);
+        v30mz_execute(128);
         goto *WEP_Tab[weppy];
 	WEP2: ;
 
@@ -581,11 +581,6 @@ bool wsExecuteLine(MDFN_Surface *surface, bool skip)
          WSwan_Interrupt(WSINT_LINE_HIT);
          //printf("Line hit: %d\n", wsLine);
         }
-
-	weppy = 3;
-	v30mz_execute(32);
-	goto *WEP_Tab[weppy];
-	WEP3: ;
 
 	RTC_Clock(256);
 
@@ -1021,12 +1016,12 @@ void WSwan_GfxStateAction(StateMem *sm, const unsigned load, const bool data_onl
    SpriteCountCache[1] = SpriteCountCache[0];
    memcpy(SpriteTable[1], SpriteTable[0], 0x80 * 4);
 
-   if(weppy == 2)
-    weppy = 3;
+   if(weppy == 3)
+    weppy = 2;
   }
   //
   //
-  weppy %= 4;
+  weppy %= 3;
 
   for(unsigned i = 0; i < 2; i++)
   {

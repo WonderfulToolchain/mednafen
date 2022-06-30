@@ -42,7 +42,7 @@ static void RecalcInterrupt(void)
  IOn_Which = 0;
  IVector_Cache = 0;
 
- for(int i = 0; i < 8; i++)
+ for(int i = 7; i >= 0; i--)
  {
   if(IStatus & IEnable & (1U << i))
   {
